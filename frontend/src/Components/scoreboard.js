@@ -1,8 +1,9 @@
 import React from 'react';
 
 const Scoreboard = (props) => (
-  <div>
-    {props.score}
+  <div className="scoreboard">
+    <p>score</p>
+    <p>{props.score}</p>
   </div>
 );
 
