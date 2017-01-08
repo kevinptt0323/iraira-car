@@ -28,10 +28,12 @@ class App extends React.Component {
     };
     return (
       <div style={style}>
-        <Gameboard
-          stageWidth={800}
-          stageHeight={600}
-          {...{stageStyle, containerStyle}} />
+        <div style={containerStyle}>
+          <Gameboard
+            width={800}
+            height={600}
+            style={stageStyle} />
+        </div>
         <Scoreboard score={this.state.score} />
       </div>
     );
