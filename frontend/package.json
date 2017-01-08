@@ -15,8 +15,10 @@
     "babel-preset-stage-2": "^6.18.0",
     "babelify": "^7.3.0",
     "browserify": "^13.1.1",
+    "konva": "^1.2.2",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-konva": "^1.1.1"
   },
   "devDependencies": {}
 }
