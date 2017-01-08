@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Gameboard from './Components/gameboard';
 import Scoreboard from './Components/scoreboard';
 
 class App extends React.Component {
@@ -9,6 +10,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <Gameboard />
         <Scoreboard score="123" />
       </div>
     );
