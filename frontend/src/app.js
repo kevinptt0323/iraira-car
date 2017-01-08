@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes }  from 'react';
 
 import Gameboard from './Components/gameboard';
 import Player from './Components/player';
@@ -11,6 +11,17 @@ class App extends React.Component {
       player: 'kevinptt',
       score: 7122
     };
+
+    this.increaseScore = this.increaseScore.bind(this);
+  }
+  getChildContext() {
+    const { increaseScore } = this;
+    return {
+      increaseScore
+    };
+  }
+  increaseScore(delta) {
+    this.setState({score: this.state.score+delta});
   }
   render() {
     const style = {
@@ -37,5 +48,9 @@ class App extends React.Component {
     );
   }
 }
+
+App.childContextTypes = {
+  increaseScore: PropTypes.func
+};
 
 export default App;
