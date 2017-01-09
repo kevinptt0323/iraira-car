@@ -9,7 +9,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       player: 'kevinptt',
-      score: 7122
+      score: 0
     };
 
     this.increaseScore = this.increaseScore.bind(this);

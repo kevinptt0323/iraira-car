@@ -11,9 +11,9 @@ class Gameboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cursorX: 50,
+      cursorX: 25,
       cursorY: 125,
-      startX: 50,
+      startX: 25,
       startY: 125,
       blocks: [
         [0, 0, 800, 0, 800, 300, 300, 300, 300, 100, 0, 100],
