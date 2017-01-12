@@ -11,17 +11,8 @@ class Gameboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      cursorX: 25,
-      cursorY: 125,
-      startX: 25,
-      startY: 125,
-      blocks: [
-        [0, 0, 800, 0, 800, 300, 300, 300, 300, 100, 0, 100],
-        [0, 600, 800, 600, 800, 350, 250, 350, 250, 150, 0, 150]
-      ],
-      goals: [
-        [750, 300, 800, 300, 800, 350, 750, 350]
-      ]
+      cursorX: 0,
+      cursorY: 0
     };
 
     this.handleBlock = this.handleBlock.bind(this);
@@ -39,7 +30,8 @@ class Gameboard extends React.Component {
   }
   handleMouseMove(e) {
     const { width, height } = this.props;
-    let { cursorX, cursorY, startX, startY } = this.state;
+    let { cursorX, cursorY } = this.state;
+    let { startX, startY } = this.props.stageData;
     cursorX += e.movementX;
     cursorY += e.movementY;
     if (cursorX<0) cursorX = 0;
@@ -77,6 +69,8 @@ class Gameboard extends React.Component {
       style = {},
       width,
       height,
+      stageData,
+      stageLoaded
     } = this.props;
     return (
       <Stage {...{width, height, style}}>
@@ -87,14 +81,14 @@ class Gameboard extends React.Component {
             fill={config.bgcolor} />
         </Layer>
         <Layer ref="blocks">
-          {this.state.blocks.map((points, idx) =>
+          {stageLoaded ? stageData.blocks.map((points, idx) =>
             <Block key={`block-${idx}`} points={points} />
-          )}
+          ) : null}
         </Layer>
         <Layer ref="goals">
-          {this.state.goals.map((points, idx) =>
+          {stageLoaded ? stageData.goals.map((points, idx) =>
             <Goal key={`goal-${idx}`} points={points} />
-          )}
+          ) : null}
         </Layer>
         <Layer ref="mainCanvas">
           <VirtualCursor x={this.state.cursorX} y={this.state.cursorY} radius={5} />

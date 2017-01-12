@@ -1,4 +1,5 @@
 import React, { PropTypes }  from 'react';
+import request from 'superagent';
 
 import Gameboard from './Components/gameboard';
 import Player from './Components/player';
@@ -9,10 +10,18 @@ class App extends React.Component {
     super(props);
     this.state = {
       player: 'kevinptt',
-      score: 0
+      score: 0,
+      stage: 1,
+      stageData: {},
+      stageLoaded: false
     };
 
     this.increaseScore = this.increaseScore.bind(this);
+    this.loadStage(this.state.stage).then((res) => {
+      this.setState({stageData: res.body, stageLoaded: true}, () => {
+        this.refs.gameboard.setState({cursorX: res.body.startX, cursorY: res.body.startY});
+      });
+    });
   }
   getChildContext() {
     const { increaseScore } = this;
@@ -23,6 +32,10 @@ class App extends React.Component {
   increaseScore(delta) {
     this.setState({score: this.state.score+delta});
   }
+  loadStage(stage) {
+    let req = request.get(`/stages/${stage}.json`);
+    return req;
+  }
   render() {
     const style = {
       backgroundColor: 'black',
@@ -32,13 +45,18 @@ class App extends React.Component {
     const stageStyle = {
       border: '1px solid #fff',
     };
+    const { state } = this;
     return (
       <div style={style}>
         <div className="gameboard">
-          <Gameboard
+          <Gameboard ref="gameboard"
             width={800}
             height={600}
-            style={stageStyle} />
+            style={stageStyle}
+            stage={state.stage}
+            stageData={state.stageData}
+            stageLoaded={state.stageLoaded}
+            />
         </div>
         <div className="navbar">
           <Player player={this.state.player} />
