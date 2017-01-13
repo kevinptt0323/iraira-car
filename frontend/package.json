@@ -19,6 +19,8 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-konva": "^1.1.1",
+    "react-motion": "^0.4.7",
+    "react-motion-loop": "^1.0.0",
     "superagent": "^3.3.2"
   },
   "devDependencies": {}
