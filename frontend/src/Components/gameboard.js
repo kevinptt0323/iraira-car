@@ -25,11 +25,13 @@ class Gameboard extends React.Component {
     increaseScore(-10);
   }
   handleGoal() {
-    const { increaseScore } = this.context;
+    const { increaseScore, nextStage } = this.context;
     increaseScore(100);
+    nextStage();
   }
   handleMouseMove(e) {
-    const { width, height } = this.props;
+    const { width, height, stageLoaded } = this.props;
+    if (!stageLoaded) return;
     let { cursorX, cursorY } = this.state;
     let { startX, startY } = this.props.stageData;
     cursorX += e.movementX;
@@ -81,17 +83,17 @@ class Gameboard extends React.Component {
             fill={config.bgcolor} />
         </Layer>
         <Layer ref="blocks">
-          {stageLoaded ? stageData.blocks.map((points, idx) =>
+          {!!stageData.blocks ? stageData.blocks.map((points, idx) =>
             <Block key={`block-${idx}`} points={points} />
           ) : null}
-          {stageLoaded ? stageData.motionblocks.map(({from, to, ...rest}, idx) =>
+          {!!stageData.motionblocks ? stageData.motionblocks.map(({from, to, ...rest}, idx) =>
             <MotionBlock key={`motionblock-${idx}`} from={from} to={to}>
               <Block {...rest} />
             </MotionBlock>
           ) : null}
         </Layer>
         <Layer ref="goals">
-          {stageLoaded ? stageData.goals.map((points, idx) =>
+          {!!stageData.goals ? stageData.goals.map((points, idx) =>
             <Goal key={`goal-${idx}`} points={points} />
           ) : null}
         </Layer>
@@ -104,7 +106,8 @@ class Gameboard extends React.Component {
 }
 
 Gameboard.contextTypes = {
-  increaseScore: PropTypes.func.isRequired
+  increaseScore: PropTypes.func.isRequired,
+  nextStage: PropTypes.func.isRequired,
 };
 
 export default Gameboard;
