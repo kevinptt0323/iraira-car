@@ -5,35 +5,47 @@ import Gameboard from './Components/gameboard';
 import Player from './Components/player';
 import Scoreboard from './Components/scoreboard';
 
+const defaultStage = 1;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       player: 'kevinptt',
       score: 0,
-      stage: 1,
+      stage: defaultStage,
       stageData: {},
       stageLoaded: false
     };
 
     this.increaseScore = this.increaseScore.bind(this);
-    this.loadStage(this.state.stage).then((res) => {
-      this.setState({stageData: res.body, stageLoaded: true}, () => {
-        this.refs.gameboard.setState({cursorX: res.body.startX, cursorY: res.body.startY});
-      });
-    });
+    this.nextStage = this.nextStage.bind(this);
+    this.loadStage();
   }
   getChildContext() {
-    const { increaseScore } = this;
+    const { increaseScore, nextStage } = this;
     return {
-      increaseScore
+      increaseScore,
+      nextStage,
     };
   }
   increaseScore(delta) {
     this.setState({score: this.state.score+delta});
   }
-  loadStage(stage) {
+  nextStage(nStage = this.state.stage+1) {
+    this.setState({stage: nStage, stageLoaded: false}, () => {
+      this.loadStage();
+    });
+  }
+  loadStage(stage = this.state.stage) {
     let req = request.get(`/stages/${stage}.json`);
+    req.then((res) => {
+      this.setState({stageData: res.body, stageLoaded: true}, () => {
+        this.refs.gameboard.setState({cursorX: res.body.startX, cursorY: res.body.startY});
+      });
+    }).catch((err) => {
+      this.nextStage(defaultStage);
+    });
     return req;
   }
   render() {
@@ -68,7 +80,8 @@ class App extends React.Component {
 }
 
 App.childContextTypes = {
-  increaseScore: PropTypes.func
+  increaseScore: PropTypes.func,
+  nextStage: PropTypes.func,
 };
 
 export default App;
