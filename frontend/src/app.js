@@ -20,7 +20,6 @@ class App extends React.Component {
 
     this.increaseScore = this.increaseScore.bind(this);
     this.nextStage = this.nextStage.bind(this);
-    this.loadStage();
   }
   getChildContext() {
     const { increaseScore, nextStage } = this;
@@ -29,24 +28,29 @@ class App extends React.Component {
       nextStage,
     };
   }
+  componentWillMount() {
+    this.nextStage(this.state.stage);
+  }
   increaseScore(delta) {
     this.setState({score: this.state.score+delta});
   }
-  nextStage(nStage = this.state.stage+1) {
-    this.setState({stage: nStage, stageLoaded: false}, () => {
-      this.loadStage();
+  nextStage(stage = this.state.stage+1) {
+    this.setState({stageLoaded: false}, () => {
+      request
+        .get(`/stages/${stage}.json`)
+        .then((res) => {
+          this.setState({stage, stageData: res.body, stageLoaded: true}, () => {
+            this.refs.gameboard.setState({cursorX: res.body.startX, cursorY: res.body.startY});
+          });
+        })
+        .catch((err) => {
+          if (stage!=defaultStage) {
+            this.nextStage(defaultStage);
+          } else {
+            console.log(`Can't load /stages/${stage}.json`);
+          }
+        });
     });
-  }
-  loadStage(stage = this.state.stage) {
-    let req = request.get(`/stages/${stage}.json`);
-    req.then((res) => {
-      this.setState({stageData: res.body, stageLoaded: true}, () => {
-        this.refs.gameboard.setState({cursorX: res.body.startX, cursorY: res.body.startY});
-      });
-    }).catch((err) => {
-      this.nextStage(defaultStage);
-    });
-    return req;
   }
   render() {
     const style = {
@@ -72,6 +76,7 @@ class App extends React.Component {
         </div>
         <div className="navbar">
           <Player player={this.state.player} />
+          <div className="stage"> Stage {state.stage} </div>
           <Scoreboard score={this.state.score} />
         </div>
       </div>
