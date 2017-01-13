@@ -88,12 +88,7 @@ class Gameboard extends React.Component {
             from={{offsetY: -25}}
             to={{offsetY: 25}}
             >
-            {interpolatingStyles => (
-              <Block
-                points={[100, 125, 100, 175, 150, 175, 150, 125]}
-                {...interpolatingStyles}
-                />
-            )}
+            <Block points={[100, 125, 100, 175, 150, 175, 150, 125]} />
           </MotionBlock>
         </Layer>
         <Layer ref="goals">

@@ -28,12 +28,14 @@ const stateToSpring = (object) => (
   }, {})
 );
 
-export const MotionBlock = ({from, to, ...props}) => (
+export const MotionBlock = ({from, to, children, ...props}) => (
   <MotionLoop
     styleFrom={stateToSpring(from)}
     styleTo={stateToSpring(to)}
     {...props}
-    />
+    >
+    {interpolatingStyles => React.cloneElement(children, {...props, ...interpolatingStyles})}
+  </MotionLoop>
 );
 
 export const VirtualCursor = ({x, y, radius=1}) => (
