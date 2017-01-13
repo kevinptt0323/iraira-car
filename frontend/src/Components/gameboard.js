@@ -1,7 +1,7 @@
 import React, { PropTypes }  from 'react';
 import { Stage, Layer, Group, Rect, Line } from 'react-konva';
 
-import { Block, Goal, MovingBlock, VirtualCursor } from './objects'
+import { Block, Goal, MotionBlock, VirtualCursor } from './objects'
 
 const config = {
   bgcolor: "#000"
@@ -84,11 +84,17 @@ class Gameboard extends React.Component {
           {stageLoaded ? stageData.blocks.map((points, idx) =>
             <Block key={`block-${idx}`} points={points} />
           ) : null}
-          <MovingBlock
-            points={[100, 125, 100, 175, 150, 175, 150, 125]}
+          <MotionBlock
             from={{offsetY: -25}}
             to={{offsetY: 25}}
-            />
+            >
+            {interpolatingStyles => (
+              <Block
+                points={[100, 125, 100, 175, 150, 175, 150, 125]}
+                {...interpolatingStyles}
+                />
+            )}
+          </MotionBlock>
         </Layer>
         <Layer ref="goals">
           {stageLoaded ? stageData.goals.map((points, idx) =>

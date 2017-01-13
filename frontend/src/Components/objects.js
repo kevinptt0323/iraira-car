@@ -3,23 +3,21 @@ import { Motion, StaggeredMotion, TransitionMotion, spring } from 'react-motion'
 import { Line, Circle } from 'react-konva';
 import { ReactMotionLoop as MotionLoop } from 'react-motion-loop';
 
-export const Block = ({points, onmouseover}) => (
+export const Block = (props) => (
   <Line
-    points={points}
     fill="white"
     strokeWidth={0}
     closed={true}
-    onmouseover={onmouseover}
+    {...props}
     />
 );
 
-export const Goal = ({points, onmouseover}) => (
+export const Goal = (props) => (
   <Line
-    points={points}
     fill="red"
     strokeWidth={0}
     closed={true}
-    onmouseover={onmouseover}
+    {...props}
     />
 );
 
@@ -30,22 +28,12 @@ const stateToSpring = (object) => (
   }, {})
 );
 
-export const MovingBlock = ({points, onmouseover, from, to}) => (
+export const MotionBlock = ({from, to, ...props}) => (
   <MotionLoop
     styleFrom={stateToSpring(from)}
     styleTo={stateToSpring(to)}
-    >
-    {interpolatingStyles => (
-      <Line ref="object"
-        points={points}
-        fill="white"
-        strokeWidth={0}
-        closed={true}
-        onmouseover={onmouseover}
-        {...interpolatingStyles}
-        />
-    )}
-  </MotionLoop>
+    {...props}
+    />
 );
 
 export const VirtualCursor = ({x, y, radius=1}) => (
