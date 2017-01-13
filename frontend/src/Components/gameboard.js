@@ -84,12 +84,11 @@ class Gameboard extends React.Component {
           {stageLoaded ? stageData.blocks.map((points, idx) =>
             <Block key={`block-${idx}`} points={points} />
           ) : null}
-          <MotionBlock
-            from={{offsetY: -25}}
-            to={{offsetY: 25}}
-            >
-            <Block points={[100, 125, 100, 175, 150, 175, 150, 125]} />
-          </MotionBlock>
+          {stageLoaded ? stageData.motionblocks.map(({from, to, ...rest}, idx) =>
+            <MotionBlock key={`motionblock-${idx}`} from={from} to={to}>
+              <Block {...rest} />
+            </MotionBlock>
+          ) : null}
         </Layer>
         <Layer ref="goals">
           {stageLoaded ? stageData.goals.map((points, idx) =>
