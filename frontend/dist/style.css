@@ -26,14 +26,20 @@
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	font-size: 1.2em;
 }
 
 .player {
-	font-size: 1.2em;
+	flex: 1;
+}
+
+.stage {
+	flex: 1;
+	font-size: 1.5em;
+	text-align: center;
 }
 
 .scoreboard {
+	flex: 1;
 	text-align: right;
-	font-size: 1.2em;
 }
