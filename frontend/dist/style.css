@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+#app {
+	position: absolute;
+	overflow: hidden;
+	font-size: 16px;
+	font-family: 'Press Start 2P', sans-serif;
+	color: #fff;
+}
+
+.gameboard {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+}
+
+.navbar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: calc((100% - 600px) / 2);
+	padding: 0 calc((100% - 800px) / 2);
+	box-sizing: border-box;
+	display: flex;
+	align-items: center;
+	font-size: 1.2em;
+}
+
+.player {
+	flex: 1;
+}
+
+.player input {
+	width: 100%;
+	background: transparent;
+	border: 0;
+	color: #fff;
+	font-family: inherit;
+}
+
+.player input:focus {
+	border-bottom: 3px dashed #fff;
+}
+
+.stage {
+	flex: 1;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+.scoreboard {
+	flex: 1;
+	text-align: right;
+}
