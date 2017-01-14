@@ -16,7 +16,8 @@ class App extends React.Component {
       score: 0,
       stage: defaultStage,
       stageData: {},
-      stageLoaded: false
+      stageLoaded: false,
+      positions: {}
     };
 
     this.increaseScore = this.increaseScore.bind(this);
@@ -39,6 +40,11 @@ class App extends React.Component {
     const { io } = this;
     io.on('connect', () => {
       this.ioEmit('join');
+    });
+    io.on('position', (data) => {
+      if (data.player != this.state.player) {
+        this.setState({positions: {...this.state.positions, [data.player]: data}});
+      }
     });
   }
   ioEmit(event, message) {
@@ -71,6 +77,9 @@ class App extends React.Component {
   componentWillMount() {
     this.nextStage(this.state.stage);
   }
+  componentWillUnmount() {
+    this.ioEmit('leave');
+  }
   render() {
     const style = {
       backgroundColor: 'black',
@@ -91,6 +100,7 @@ class App extends React.Component {
             stage={state.stage}
             stageData={state.stageData}
             stageLoaded={state.stageLoaded}
+            positions={state.positions}
             />
         </div>
         <div className="navbar">

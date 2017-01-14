@@ -72,8 +72,10 @@ class Gameboard extends React.Component {
       style = {},
       width,
       height,
+      stage,
       stageData,
-      stageLoaded
+      stageLoaded,
+      positions
     } = this.props;
     return (
       <Stage {...{width, height, style}}>
@@ -100,6 +102,9 @@ class Gameboard extends React.Component {
         </Layer>
         <Layer ref="mainCanvas">
           <VirtualCursor x={this.state.cursorX} y={this.state.cursorY} radius={5} />
+          {Object.keys(positions).filter(player => positions[player].stage==stage).map(player =>
+            <VirtualCursor x={positions[player].cursorX} y={positions[player].cursorY} radius={2} />
+          )}
         </Layer>
       </Stage>
     );
