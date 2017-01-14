@@ -4,6 +4,7 @@ const cors = require('koa-cors');
 const serve = require('koa-static');
 
 const site = require('./Routes/site');
+const gameio = require('./game-server');
 
 const { HOST="0.0.0.0", PORT=8080 } = process.env;
 
@@ -21,6 +22,8 @@ app
       this.body = { message: this.body };
     }
   });
+
+gameio.attach(app);
 
 app.listen({ host: HOST, port: PORT }, () => {
   console.log(`koa server listen at ${HOST}:${PORT}`);

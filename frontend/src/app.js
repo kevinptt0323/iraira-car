@@ -1,5 +1,6 @@
 import React, { PropTypes }  from 'react';
 import request from 'superagent';
+import socket from 'socket.io-client';
 
 import Gameboard from './Components/gameboard';
 import Player from './Components/player';
@@ -21,6 +22,15 @@ class App extends React.Component {
     this.increaseScore = this.increaseScore.bind(this);
     this.nextStage = this.nextStage.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
+
+    this.io = socket('/');
+    this.listenIO();
+  }
+  listenIO() {
+    const { io } = this;
+    io.on('connect', () => {
+      io.emit('join', { player: this.state.player });
+    });
   }
   getChildContext() {
     const { increaseScore, nextStage } = this;
