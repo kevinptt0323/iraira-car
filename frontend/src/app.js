@@ -11,7 +11,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      player: 'kevinptt',
+      player: 'Player ' + (((Math.random()*9)|0)+1),
       score: 0,
       stage: defaultStage,
       stageData: {},
