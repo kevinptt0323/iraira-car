@@ -101,9 +101,9 @@ class Gameboard extends React.Component {
           ) : null}
         </Layer>
         <Layer ref="mainCanvas">
-          <VirtualCursor x={this.state.cursorX} y={this.state.cursorY} radius={5} />
+          <VirtualCursor x={this.state.cursorX} y={this.state.cursorY} radius={5} fill="cyan" />
           {Object.keys(positions).filter(player => positions[player].stage==stage).map(player =>
-            <VirtualCursor x={positions[player].cursorX} y={positions[player].cursorY} radius={2} />
+            <VirtualCursor x={positions[player].cursorX} y={positions[player].cursorY} radius={3} fill="blue" />
           )}
         </Layer>
       </Stage>

@@ -11,7 +11,7 @@ gameio.on('join', (ctx, {player}) => {
 });
 
 gameio.on('position', (ctx, {player, stage, cursorX, cursorY}) => {
-  log(`Position: ${player} at (${cursorX}, ${cursorY}) in stage ${stage}`);
+  //log(`Position: ${player} at (${cursorX}, ${cursorY}) in stage ${stage}`);
   gameio.broadcast('position', {player, stage, cursorX, cursorY});
 });
 
