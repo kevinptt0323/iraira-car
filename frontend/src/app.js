@@ -6,7 +6,7 @@ import Gameboard from './Components/gameboard';
 import Player from './Components/player';
 import Scoreboard from './Components/scoreboard';
 
-const defaultStage = 1;
+const defaultStage = 0;
 
 class App extends React.Component {
   constructor(props) {
