@@ -30,7 +30,7 @@ class Gameboard extends React.Component {
     nextStage();
   }
   handleMouseMove(e) {
-    const { width, height, stageLoaded } = this.props;
+    const { width, height, stage, stageLoaded } = this.props;
     if (!stageLoaded) return;
     let { cursorX, cursorY } = this.state;
     let { startX, startY } = this.props.stageData;
@@ -49,6 +49,7 @@ class Gameboard extends React.Component {
       this.handleGoal();
     }
     this.setState({cursorX, cursorY});
+    this.context.ioEmit('position', {stage, cursorX, cursorY});
   }
   handleLockChange() {
     const canvas = this.refs.mainCanvas.getLayer().getCanvas()._canvas;
@@ -108,6 +109,7 @@ class Gameboard extends React.Component {
 Gameboard.contextTypes = {
   increaseScore: PropTypes.func.isRequired,
   nextStage: PropTypes.func.isRequired,
+  ioEmit: PropTypes.func
 };
 
 export default Gameboard;

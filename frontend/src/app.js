@@ -22,25 +22,27 @@ class App extends React.Component {
     this.increaseScore = this.increaseScore.bind(this);
     this.nextStage = this.nextStage.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
+    this.ioEmit = this.ioEmit.bind(this);
 
     this.io = socket('/');
     this.listenIO();
   }
-  listenIO() {
-    const { io } = this;
-    io.on('connect', () => {
-      io.emit('join', { player: this.state.player });
-    });
-  }
   getChildContext() {
-    const { increaseScore, nextStage } = this;
+    const { increaseScore, nextStage, ioEmit } = this;
     return {
       increaseScore,
       nextStage,
+      ioEmit,
     };
   }
-  componentWillMount() {
-    this.nextStage(this.state.stage);
+  listenIO() {
+    const { io } = this;
+    io.on('connect', () => {
+      this.ioEmit('join');
+    });
+  }
+  ioEmit(event, message) {
+    this.io.emit(event, { player: this.state.player, ...message });
   }
   increaseScore(delta) {
     this.setState({score: this.state.score+delta});
@@ -65,6 +67,9 @@ class App extends React.Component {
   }
   changePlayer(e) {
     this.setState({player: e.target.value});
+  }
+  componentWillMount() {
+    this.nextStage(this.state.stage);
   }
   render() {
     const style = {
@@ -101,6 +106,7 @@ class App extends React.Component {
 App.childContextTypes = {
   increaseScore: PropTypes.func,
   nextStage: PropTypes.func,
+  ioEmit: PropTypes.func,
 };
 
 export default App;
