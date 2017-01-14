@@ -1,0 +1,22 @@
+{
+  "name": "iraira-car",
+  "version": "0.0.1",
+  "description": "online version",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinptt0323/iraira-car.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^1.2.4",
+    "koa-body": "^1.6.0",
+    "koa-cors": "0.0.16",
+    "koa-router": "^5.4.0"
+  }
+}
