@@ -28,9 +28,9 @@ const stateToSpring = (object) => (
   }, {})
 );
 
-export const MotionBlock = ({from, to, children, ...props}) => (
+export const MotionBlock = ({from, to, alternate=true, children, ...props}) => (
   <MotionLoop
-    styleFrom={stateToSpring(from)}
+    styleFrom={alternate?stateToSpring(from):from}
     styleTo={stateToSpring(to)}
     {...props}
     >
