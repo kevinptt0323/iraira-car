@@ -20,6 +20,7 @@ class App extends React.Component {
 
     this.increaseScore = this.increaseScore.bind(this);
     this.nextStage = this.nextStage.bind(this);
+    this.changePlayer = this.changePlayer.bind(this);
   }
   getChildContext() {
     const { increaseScore, nextStage } = this;
@@ -52,6 +53,9 @@ class App extends React.Component {
         });
     });
   }
+  changePlayer(e) {
+    this.setState({player: e.target.value});
+  }
   render() {
     const style = {
       backgroundColor: 'black',
@@ -75,7 +79,7 @@ class App extends React.Component {
             />
         </div>
         <div className="navbar">
-          <Player player={this.state.player} />
+          <Player player={this.state.player} handleChange={this.changePlayer} />
           <div className="stage"> Stage {state.stage} </div>
           <Scoreboard score={this.state.score} />
         </div>
