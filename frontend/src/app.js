@@ -3,6 +3,7 @@ import request from 'superagent';
 import socket from 'socket.io-client';
 
 import Gameboard from './Components/gameboard';
+import Landing from './Components/landing';
 import Player from './Components/player';
 import Scoreboard from './Components/scoreboard';
 
@@ -12,6 +13,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      landing: true,
       player: 'Player ' + (((Math.random()*9)|0)+1),
       score: 0,
       stage: defaultStage,
@@ -20,6 +22,7 @@ class App extends React.Component {
       positions: {}
     };
 
+    this.enterGame = this.enterGame.bind(this);
     this.increaseScore = this.increaseScore.bind(this);
     this.nextStage = this.nextStage.bind(this);
     this.changePlayer = this.changePlayer.bind(this);
@@ -38,9 +41,7 @@ class App extends React.Component {
   }
   listenIO() {
     const { io } = this;
-    io.on('connect', () => {
-      this.ioEmit('join');
-    });
+    io.on('connect', () => { });
     io.on('position', (data) => {
       if (data.player != this.state.player) {
         this.setState({positions: {...this.state.positions, [data.player]: data}});
@@ -49,6 +50,10 @@ class App extends React.Component {
   }
   ioEmit(event, message) {
     this.io.emit(event, { player: this.state.player, ...message });
+  }
+  enterGame() {
+    this.setState({landing: false});
+    this.ioEmit('join');
   }
   increaseScore(delta) {
     this.setState({score: this.state.score+delta});
@@ -79,6 +84,7 @@ class App extends React.Component {
   }
   componentWillUnmount() {
     this.ioEmit('leave');
+    this.io.disconnect();
   }
   render() {
     const style = {
@@ -93,15 +99,19 @@ class App extends React.Component {
     return (
       <div style={style}>
         <div className="gameboard">
-          <Gameboard ref="gameboard"
-            width={800}
-            height={600}
-            style={stageStyle}
-            stage={state.stage}
-            stageData={state.stageData}
-            stageLoaded={state.stageLoaded}
-            positions={state.positions}
-            />
+          {state.landing ? (
+            <Landing player={this.state.player} handleChange={this.changePlayer} handleClick={this.enterGame}/>
+          ):(
+            <Gameboard ref="gameboard"
+              width={800}
+              height={600}
+              style={stageStyle}
+              stage={state.stage}
+              stageData={state.stageData}
+              stageLoaded={state.stageLoaded}
+              positions={state.positions}
+              />
+          )}
         </div>
         <div className="navbar">
           <Player player={this.state.player} handleChange={this.changePlayer} />
