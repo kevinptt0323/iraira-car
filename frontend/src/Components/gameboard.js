@@ -89,8 +89,8 @@ class Gameboard extends React.Component {
           {!!stageData.blocks ? stageData.blocks.map((points, idx) =>
             <Block key={`block-${stage}-${idx}`} points={points} />
           ) : null}
-          {!!stageData.motionblocks ? stageData.motionblocks.map(({from, to, alternate, ...rest}, idx) =>
-            <MotionBlock key={`motionblock-${stage}-${idx}`} {...{from, to, alternate}}>
+          {!!stageData.motionblocks ? stageData.motionblocks.map(({from, to, config, alternate, ...rest}, idx) =>
+            <MotionBlock key={`motionblock-${stage}-${idx}`} {...{from, to, config, alternate}}>
               <Block {...rest} />
             </MotionBlock>
           ) : null}

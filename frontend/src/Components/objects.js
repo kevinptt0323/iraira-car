@@ -21,17 +21,17 @@ export const Goal = (props) => (
     />
 );
 
-const stateToSpring = (object) => (
+const stateToSpring = (object, config={}) => (
   Object.keys(object).reduce((obj, key) => {
-    obj[key] = spring(object[key]);
+    obj[key] = spring(object[key], config);
     return obj;
   }, {})
 );
 
-export const MotionBlock = ({from, to, alternate=true, children, ...props}) => (
+export const MotionBlock = ({from, to, config, alternate=true, children, ...props}) => (
   <MotionLoop
-    styleFrom={alternate?stateToSpring(from):from}
-    styleTo={stateToSpring(to)}
+    styleFrom={alternate?stateToSpring(from, config):from}
+    styleTo={stateToSpring(to, config)}
     {...props}
     >
     {interpolatingStyles => React.cloneElement(children, {...props, ...interpolatingStyles})}
