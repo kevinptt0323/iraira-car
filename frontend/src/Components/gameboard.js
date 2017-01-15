@@ -30,7 +30,7 @@ class Gameboard extends React.Component {
     nextStage();
   }
   handleMouseMove(e) {
-    const { width, height, stageLoaded } = this.props;
+    const { width, height, stage, stageLoaded } = this.props;
     if (!stageLoaded) return;
     let { cursorX, cursorY } = this.state;
     let { startX, startY } = this.props.stageData;
@@ -49,6 +49,7 @@ class Gameboard extends React.Component {
       this.handleGoal();
     }
     this.setState({cursorX, cursorY});
+    this.context.ioEmit('position', {stage, cursorX, cursorY});
   }
   handleLockChange() {
     const canvas = this.refs.mainCanvas.getLayer().getCanvas()._canvas;
@@ -71,8 +72,10 @@ class Gameboard extends React.Component {
       style = {},
       width,
       height,
+      stage,
       stageData,
-      stageLoaded
+      stageLoaded,
+      positions
     } = this.props;
     return (
       <Stage {...{width, height, style}}>
@@ -98,7 +101,10 @@ class Gameboard extends React.Component {
           ) : null}
         </Layer>
         <Layer ref="mainCanvas">
-          <VirtualCursor x={this.state.cursorX} y={this.state.cursorY} radius={5} />
+          <VirtualCursor x={this.state.cursorX} y={this.state.cursorY} radius={5} fill="cyan" />
+          {Object.keys(positions).filter(player => positions[player].stage==stage).map(player =>
+            <VirtualCursor x={positions[player].cursorX} y={positions[player].cursorY} radius={3} fill="blue" />
+          )}
         </Layer>
       </Stage>
     );
@@ -108,6 +114,7 @@ class Gameboard extends React.Component {
 Gameboard.contextTypes = {
   increaseScore: PropTypes.func.isRequired,
   nextStage: PropTypes.func.isRequired,
+  ioEmit: PropTypes.func
 };
 
 export default Gameboard;

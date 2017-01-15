@@ -8,6 +8,48 @@
 	color: #fff;
 }
 
+.landing-page {
+	text-align: center;
+	font-size: 1.2em;
+}
+
+.landing-page h1 {
+	font-size: 2.5em;
+}
+
+.landing-page .player {
+	display: flex;
+	margin: 30px;
+}
+
+.landing-page .player:before {
+	content: 'Your Name:';
+	display: block;
+}
+
+.landing-page input {
+	display: block;
+	margin: auto;
+	background: transparent;
+	border: 0;
+	color: #fff;
+	font-family: inherit;
+	text-align: center;
+	border-bottom: 3px dashed #fff;
+}
+
+.landing-page .enter {
+	display: inline-block;
+	border: 3px solid #fff;
+	padding: 10px 20px;
+	cursor: pointer;
+}
+
+.landing-page .enter:hover {
+	background: #fff;
+	color: #000;
+}
+
 .gameboard {
 	display: flex;
 	align-items: center;
@@ -29,11 +71,11 @@
 	font-size: 1.2em;
 }
 
-.player {
+.navbar .player {
 	flex: 1;
 }
 
-.player input {
+.navbar .player input {
 	width: 100%;
 	background: transparent;
 	border: 0;
@@ -41,7 +83,7 @@
 	font-family: inherit;
 }
 
-.player input:focus {
+.navbar .player input:focus {
 	border-bottom: 3px dashed #fff;
 }
 

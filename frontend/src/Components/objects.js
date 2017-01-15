@@ -38,12 +38,13 @@ export const MotionBlock = ({from, to, alternate=true, children, ...props}) => (
   </MotionLoop>
 );
 
-export const VirtualCursor = ({x, y, radius=1}) => (
+export const VirtualCursor = ({x, y, ...props}) => (
   <Circle
     x={x}
     y={y}
-    radius={radius}
+    radius={1}
     fill="blue"
     strokeWidth={0}
+    {...props}
     />
 );
