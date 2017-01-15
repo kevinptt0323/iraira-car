@@ -87,23 +87,23 @@ class Gameboard extends React.Component {
         </Layer>
         <Layer ref="blocks">
           {!!stageData.blocks ? stageData.blocks.map((points, idx) =>
-            <Block key={`block-${idx}`} points={points} />
+            <Block key={`block-${stage}-${idx}`} points={points} />
           ) : null}
           {!!stageData.motionblocks ? stageData.motionblocks.map(({from, to, alternate, ...rest}, idx) =>
-            <MotionBlock key={`motionblock-${idx}`} {...{from, to, alternate}}>
+            <MotionBlock key={`motionblock-${stage}-${idx}`} {...{from, to, alternate}}>
               <Block {...rest} />
             </MotionBlock>
           ) : null}
         </Layer>
         <Layer ref="goals">
           {!!stageData.goals ? stageData.goals.map((points, idx) =>
-            <Goal key={`goal-${idx}`} points={points} />
+            <Goal key={`goal-${stage}-${idx}`} points={points} />
           ) : null}
         </Layer>
         <Layer ref="mainCanvas">
           <VirtualCursor x={this.state.cursorX} y={this.state.cursorY} radius={5} fill="cyan" />
           {Object.keys(positions).filter(player => positions[player].stage==stage).map(player =>
-            <VirtualCursor x={positions[player].cursorX} y={positions[player].cursorY} radius={3} fill="blue" />
+            <VirtualCursor key={`${player}`} x={positions[player].cursorX} y={positions[player].cursorY} radius={3} fill="blue" />
           )}
         </Layer>
       </Stage>
